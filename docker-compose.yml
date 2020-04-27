@@ -1,13 +1,13 @@
 version: "3"
 services:
-  database:
+  postgres:
     image: postgres:9.6.17-alpine
     env_file:
       - env_files/database.env
     ports:
       - 5432:5432
     volumes:
-      - database-data:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data/
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./db/seed.sql:/docker-entrypoint-initdb.d/seed.sql
   pgadmin:
@@ -18,17 +18,15 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     ports:
       - 5050:80
-  ais-sug-apiserver:
+  apiserver:
     depends_on:
-      - database
+      - postgres
     image: ais-sug-apiserver:ver1
-    env_file:
-      - env_files/database.env
-    environment:
-      POSTGRES_HOST: database
+    volumes:
+      - ./config/ais-sug-back.yml:/config.yml
     ports:
       - 8080:8080
 
 volumes:
-  database-data:
+  postgres-data:
   pgadmin-data:

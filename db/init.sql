@@ -34,16 +34,26 @@ CREATE TABLE Группа__Семестр(
 );
 
 -- done - done
+CREATE TABLE МестоЖительства(
+    id SERIAL,
+    адрес varchar(100) NOT NULL,
+    город varchar(20) NOT NULL,
+    общежитие boolean NOT NULL,
+    CONSTRAINT место_жительства_pk PRIMARY KEY (id)
+);
+
+-- done - done
 CREATE TABLE Студент(
     id SERIAL,
     id_группы int NOT NULL references Группа(id) ON DELETE CASCADE,
+    id_места_жительства int NOT NULL references МестоЖительства(id) ON DELETE CASCADE,
     имя varchar(50) NOT NULL,
     фамилия varchar(50) NOT NULL,
     отчество varchar(50),
     CONSTRAINT студент_pk PRIMARY KEY (id)
 );
 
--- done - done
+-- done done done
 CREATE TABLE ТипКонтакта(
     id SERIAL,
     обозначение varchar(100) NOT NULL,
@@ -59,24 +69,16 @@ CREATE TABLE Контакт(
     CONSTRAINT контакт_pk PRIMARY KEY (id)
 );
 
--- done - done
-CREATE TABLE МестоЖительства(
-    id SERIAL,
-    адрес varchar(100) NOT NULL,
-    город varchar(20) NOT NULL,
-    общежитие boolean NOT NULL,
-    CONSTRAINT место_жительства_pk PRIMARY KEY (id)
-);
-
 -- - - done
-CREATE TABLE Студент__МестоЖительства(
-    id SERIAL,
-    id_студента int NOT NULL references Студент(id) ON DELETE CASCADE,
-    id_места_жительства int NOT NULL references МестоЖительства(id) ON DELETE CASCADE,
-    CONSTRAINT студент_место_жительства_pk PRIMARY KEY (id)
-);
 
--- done - done
+-- CREATE TABLE Студент__МестоЖительства(
+--     id SERIAL,
+--     id_студента int NOT NULL references Студент(id) ON DELETE CASCADE,
+--     id_места_жительства int NOT NULL references МестоЖительства(id) ON DELETE CASCADE,
+--     CONSTRAINT студент_место_жительства_pk PRIMARY KEY (id)
+-- );
+
+-- done done done
 CREATE TABLE Дисциплина(
     id SERIAL,
     название varchar(150),

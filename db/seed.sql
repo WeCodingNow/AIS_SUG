@@ -1,5 +1,5 @@
 -- types
-INSERT INTO ais_user_class(def) VALUES
+INSERT INTO ais_user_role(def) VALUES
     ('администратор'),  -- 1
     ('староста'),       -- 2
     ('студент');        -- 3

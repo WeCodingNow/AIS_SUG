@@ -122,25 +122,25 @@ CREATE TABLE ais_user(
 );
 
 -- - done -
-CREATE TABLE ais_user_class(
+CREATE TABLE ais_user_role(
     id SERIAL,
     def varchar(100) NOT NULL UNIQUE,
-    CONSTRAINT ais_user_class_pk PRIMARY KEY (id)
+    CONSTRAINT ais_user_role_pk PRIMARY KEY (id)
 );
 
 -- - done -
 CREATE TABLE ais_user_student_binding(
     id SERIAL,
-    student_id int references Студент(id),
+    user_id int NOT NULL references ais_user(id),
+    student_id int NOT NULL references Студент(id),
     CONSTRAINT ais_student_binding_pk PRIMARY KEY (id)
 );
 
 -- - done -
 CREATE TABLE ais_role_binding(
     id SERIAL,
-    ais_user_class_id int NOT NULL references ais_user_class(id) ON DELETE CASCADE,
+    ais_user_role_id int NOT NULL references ais_user_role(id) ON DELETE CASCADE,
     ais_user_id int NOT NULL references ais_user(id) ON DELETE CASCADE,
-    user_class_confirmed boolean NOT NULL,
     CONSTRAINT ais_role_binding_pk PRIMARY KEY (id)
 );
 

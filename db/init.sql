@@ -86,6 +86,21 @@ CREATE TABLE Дисциплина(
     CONSTRAINT дисциплина_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE Задолженность(
+    id SERIAL,
+    id_дисциплины int NOT NULL references Дисциплина(id) ON DELETE CASCADE,
+	id_студента int NOT NULL references Студент(id) ON DELETE CASCADE,
+    описание varchar(200),
+    ликвидирована boolean NOT NULL DEFAULT false,
+    CONSTRAINT задолженность_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE Дисциплина__Семестр(
+    id SERIAL,
+    id_дисциплины int NOT NULL references Дисциплина(id) ON DELETE CASCADE,
+    id_семестра int NOT NULL references Семестр(id) ON DELETE CASCADE
+);
+
 -- done - done
 CREATE TABLE ТипКонтрольногоМероприятия(
     id SERIAL,

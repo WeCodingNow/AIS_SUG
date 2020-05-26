@@ -30,13 +30,14 @@ fi
 
 if [[ "PARAMS" ]]; then
     docker-compose up $PARAMS
+    docker-compose down $PARAMS
 else
     docker-compose up
+    docker-compose down
 fi
 
-docker-compose down
-
 if [[ "$CLEAN_DB" ]]; then
+    docker rm aissug_postgres_1
     docker volume rm "$DB_VOLUME"
 fi
 
